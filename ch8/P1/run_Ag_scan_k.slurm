@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --time=01:00:00
-#SBATCH --array=0-4
+#SBATCH --array=0-7
 #SBATCH --output=logs/%x_%A_%a.out
 #SBATCH --error=logs/%x_%A_%a.err
 
@@ -19,7 +19,7 @@ SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$PWD}"
 mkdir -p "${SUBMIT_DIR}/runs" "${SUBMIT_DIR}/logs" "${SUBMIT_DIR}/pseudos"
 
 # ---- cubic k-point meshes to test ----
-K=(4 6 8 12 16)
+K=(4 6 8 12 16 20 24)
 
 idx=${SLURM_ARRAY_TASK_ID}
 nk=${K[$idx]}
