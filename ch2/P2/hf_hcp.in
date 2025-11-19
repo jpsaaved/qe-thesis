@@ -1,0 +1,23 @@
+&control
+  calculation='scf', prefix='hf_hcp', pseudo_dir='./pseudos', outdir='./tmp'
+/
+&system
+  ibrav=0, nat=2, ntyp=1,
+  ecutwfc=60, ecutrho=480,
+  occupations='smearing', smearing='mp', degauss=0.02
+/
+&electrons
+  conv_thr=1d-9, mixing_beta=0.3
+/
+ATOMIC_SPECIES
+  Hf 178.49 Hf-sp.oncvpsp.upf
+ATOMIC_POSITIONS crystal
+  Hf 0.000000 0.000000 0.000000
+  Hf 0.666667 0.333333 0.500000
+K_POINTS automatic
+  15 15 9  0 0 0
+CELL_PARAMETERS angstrom
+  AAX_Y  0.000000  0.000000
+  0.000000  AAY  0.000000
+  0.000000  0.000000  CCX
+

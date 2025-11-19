@@ -1,0 +1,10 @@
+# QE scratch / runs
+runs/
+tmp/
+logs/
+pseudos/
+*.out
+*.wfc*
+*.save/
+*.d
+

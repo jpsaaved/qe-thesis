@@ -1,0 +1,28 @@
+&control
+  calculation = 'scf',
+  prefix      = 'ScAl_B1',
+  outdir      = './tmp',
+  pseudo_dir  = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS'
+/
+&system
+  ibrav=1,         
+  A = AAAA,                ! <- lattice parameter in Å (your array substitutes here)
+  nat=2, ntyp=2,
+  input_dft='PBE',
+  ecutwfc=70, ecutrho=280,
+  occupations='smearing', smearing='mp', degauss=0.02
+/
+&electrons
+  conv_thr=1.0d-6,
+  mixing_beta=0.3,
+  electron_maxstep=200
+/
+ATOMIC_SPECIES
+  Sc 44.9559 Sc.pbe-spn-kjpaw_psl.1.0.0.UPF
+  Al 26.9815 Al.pbe-n-kjpaw_psl.1.0.0.UPF
+ATOMIC_POSITIONS crystal
+  Sc 0.000000 0.000000 0.000000
+  Al 0.000000 0.500000 0.500000
+
+K_POINTS automatic
+  16 16 16  0 0 0
