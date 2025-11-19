@@ -1,5 +1,5 @@
 # QE scratch / runs
-ch/**/runs/
+ch2/**/runs/
 tmp/
 logs/
 pseudos/
