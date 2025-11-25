@@ -1,12 +1,12 @@
 &control
   calculation = 'scf',
-  prefix      = 'fe_FM_a2p95',
+  prefix      = 'fe_FM_a2p60',
   pseudo_dir  = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
-  outdir      = './tmp/fe_FM_a2p95'
+  outdir      = './tmp/fe_FM_a2p60'
 /
 &system
   ibrav       = 3,
-  A           = 2.95,
+  A           = 2.60,
   nat         = 2,
   ntyp        = 1,
   ecutwfc     = 45.0,

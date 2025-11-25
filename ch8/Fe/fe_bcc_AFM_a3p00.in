@@ -24,8 +24,8 @@
   mixing_beta = 0.7
 /
 ATOMIC_SPECIES
-  Fe1  55.845  Fe.pbe-n-kjpaw_psl.1.0.0.UPF
-  Fe2  55.845  Fe.pbe-n-kjpaw_psl.1.0.0.UPF
+  Fe1  55.845  Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
+  Fe2  55.845  Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
 ATOMIC_POSITIONS (crystal)
   Fe1  0.00  0.00  0.00
   Fe2  0.50  0.50  0.50

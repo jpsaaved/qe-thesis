@@ -1,30 +1,34 @@
 &control
   calculation = 'scf',
-  prefix      = 'fe_FM_a2p95',
+  prefix      = 'fe_AFM_a2p50',
   pseudo_dir  = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
-  outdir      = './tmp/fe_FM_a2p95'
+  outdir      = './tmp/fe_AFM_a2p50'
 /
 &system
   ibrav       = 3,
-  A           = 2.95,
+  A           = 2.50,
   nat         = 2,
-  ntyp        = 1,
+  ntyp        = 2,
   ecutwfc     = 45.0,
   ecutrho     = 360.0,
   occupations = 'smearing',
   smearing    = 'mp',
   degauss     = 0.02,
   nspin       = 2,
-  starting_magnetization(1) = 0.6
+  starting_magnetization(1) = 0.6,
+  starting_magnetization(2) = -0.6,
+  tot_magnetization = 0
 /
 &electrons
   conv_thr    = 1.0d-8,
   mixing_beta = 0.7
 /
 ATOMIC_SPECIES
-  Fe  55.845  Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
+  Fe1  55.845  Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
+  Fe2  55.845  Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
 ATOMIC_POSITIONS (crystal)
-  Fe  0.00  0.00  0.00
-  Fe  0.50  0.50  0.50
+  Fe1  0.00  0.00  0.00
+  Fe2  0.50  0.50  0.50
 K_POINTS automatic
   12 12 12  0 0 0
+
