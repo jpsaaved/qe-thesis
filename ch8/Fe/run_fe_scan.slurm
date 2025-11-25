@@ -11,70 +11,83 @@ set -euo pipefail
 export OMP_NUM_THREADS=1
 
 module purge || true
-module load qe      # adjust as needed
-# If no modules:
-# export PATH=/path/to/qe/bin:$PATH
+module load qe      # adjust to your module name
 
-# -----------------------------
+# ==========================
 # User settings
-# -----------------------------
-SPIN_MODE="AFM"                # options: NM, FM, AFM
-TEMPLATE_IN="fe_bcc_${SPIN_MODE}.in"
+# ==========================
 
-mkdir -p tmp runs logs data
+# Choose spin state for this batch submit: NM, FM, or AFM
+SPIN_MODE="NM"
 
-# -----------------------------
+# Template file names (must be in the working directory)
+TEMPLATE_NM="fe_bcc_NM.in"
+TEMPLATE_FM="fe_bcc_FM.in"
+TEMPLATE_AFM="fe_bcc_AFM.in"
+
+mkdir -p tmp logs data
+
+# ==========================
 # Read lattice constants
-# -----------------------------
-# a_list.txt should contain one value per line (ignore lines starting with #)
-Avals=($(grep -v '^#' a_list.txt | tr -d '\r'))
+# ==========================
+
+# a_list.txt: one value per line, comments allowed with '#'
+mapfile -t Avals < <(grep -v '^\s*#' a_list.txt | tr -d '\r')
 
 idx=${SLURM_ARRAY_TASK_ID}
 if (( idx < 0 || idx >= ${#Avals[@]} )); then
-  echo "Error: SLURM_ARRAY_TASK_ID=${idx} out of range (0..$((${#Avals[@]}-1)))"
-  exit 1
+    echo "Error: SLURM_ARRAY_TASK_ID=${idx} out of range (0..$((${#Avals[@]}-1)))"
+    exit 1
 fi
 
-A=${Avals[$idx]}          # lattice constant in Å as string, e.g. "2.85"
-A_TAG=${A//./p}           # for filenames, e.g. "2p85"
+A=${Avals[$idx]}              # e.g. "2.85"
+A_TAG=${A//./p}               # e.g. "2p85" for filenames
 
-echo "Running ${SPIN_MODE} bcc Fe for a = ${A} Å (index ${idx})"
+echo "Running $SPIN_MODE bcc Fe for a = $A Å (index $idx)"
 
-# -----------------------------
-# Build per-a QE input file
-# -----------------------------
+# ==========================
+# Pick template by spin mode
+# ==========================
+
+case "$SPIN_MODE" in
+  "NM")  TEMPLATE="$TEMPLATE_NM"  ;;
+  "FM")  TEMPLATE="$TEMPLATE_FM"  ;;
+  "AFM") TEMPLATE="$TEMPLATE_AFM" ;;
+  *) echo "Unknown SPIN_MODE '$SPIN_MODE' (use NM/FM/AFM)"; exit 1 ;;
+esac
+
+# ==========================
+# Build QE input
+# ==========================
+
+PREFIX="fe_${SPIN_MODE}_a${A_TAG}"
+OUTDIR="./tmp/${PREFIX}"
 INPUT="fe_bcc_${SPIN_MODE}_a${A_TAG}.in"
+OUTPUT="data/${PREFIX}.out"
 
-# We modify:
-#  - the A = ... line
-#  - the prefix = 'fe_X' line
-#  - the outdir = './tmp/fe_X' line
-sed \
-  -e "s/^\(\s*A\s*=\s*\).*/\1${A},/" \
-  -e "s/^\(\s*prefix\s*=\s*'\)fe_${SPIN_MODE}\('.*\)/\1fe_${SPIN_MODE}_a${A_TAG}\2/" \
-  -e "s|^\(\s*outdir\s*=\s*'\)\./tmp/fe_${SPIN_MODE}\('.*\)|\1./tmp/fe_${SPIN_MODE}_a${A_TAG}\2|" \
-  "${TEMPLATE_IN}" > "${INPUT}"
+mkdir -p "$OUTDIR"
 
-# Make sure the per-a outdir exists (matches what we just put into the input)
-OUTDIR="./tmp/fe_${SPIN_MODE}_a${A_TAG}"
-mkdir -p "${OUTDIR}"
+# Replace AAAA, PREFIX, OUTDIR in the template
+sed -e "s/AAAA/${A}/g" \
+    -e "s/PREFIX/${PREFIX}/g" \
+    -e "s|OUTDIR|${OUTDIR}|g" \
+    "$TEMPLATE" > "$INPUT"
 
-# -----------------------------
-# Run QE
-# -----------------------------
-OUTFILE="runs/fe_${SPIN_MODE}_a${A_TAG}.out"
-echo "Running pw.x < ${INPUT} > ${OUTFILE}"
-pw.x < "${INPUT}" > "${OUTFILE}"
+# ==========================
+# Run Quantum ESPRESSO
+# ==========================
 
+echo "Running pw.x with input $INPUT"
+srun pw.x -in "$INPUT" > "$OUTPUT"
 
 # -----------------------------
 # Aggregate total energies
 # -----------------------------
 # Grab the first '!    total energy' line and take the 5th column (in Ry)
-energy_ry=$(grep -m1 '!    total energy' "${OUTFILE}" | awk '{print $5}')
+energy_ry=$(grep -m1 '!    total energy' "${OUTPUT}" | awk '{print $5}')
 
 if [[ -z "${energy_ry}" ]]; then
-  echo "WARNING: Could not extract total energy from ${OUTFILE}" >&2
+  echo "WARNING: Could not extract total energy from ${OUTPUT}" >&2
 else
   datafile="data/fe_${SPIN_MODE}_E_vs_a.dat"
   # Append: a(Angstrom)   E_total(Ry)
