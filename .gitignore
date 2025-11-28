@@ -7,4 +7,8 @@ pseudos/
 *.wfc*
 *.save/
 *.d
-
+*.sh
+fe_bcc_*_a*.in
+inputs/*.in
+CRASH
+*.misc
