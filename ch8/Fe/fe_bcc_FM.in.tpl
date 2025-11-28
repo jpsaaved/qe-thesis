@@ -17,8 +17,8 @@
     degauss       = 0.01,
 
     nspin         = 2,
-    starting_magnetization(1) = 0.7,  ! strong initial FM moment
-    starting_magnetization(2) = 0.7,
+    starting_magnetization(1) = 0.8,  ! strong initial FM moment
+    starting_magnetization(2) = 0.8,
 /
 &electrons
     conv_thr      = 1.0d-8,
