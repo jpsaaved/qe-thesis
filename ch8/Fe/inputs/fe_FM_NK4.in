@@ -1,13 +1,13 @@
 &control
     calculation   = 'scf',
-    prefix        = 'PREFIX',
+    prefix        = 'fe_FM_NK4',
     pseudo_dir    = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
     outdir        = './tmp',
     verbosity     = 'high'
 /
 &system
     ibrav         = 3,
-    A             = AAAA,
+    A             = 2.85,
     nat           = 2,
     ntyp          = 2,
     ecutwfc       = 45.0,
@@ -22,7 +22,7 @@
 /
 &electrons
     conv_thr      = 1.0d-8,
-    mixing_beta   = 0.3,             ! gentler mixing → less collapse to NM
+    mixing_beta   = 0.1,             ! gentler mixing → less collapse to NM
     mixing_mode   = 'local-TF',
 /
 ATOMIC_SPECIES
@@ -34,5 +34,5 @@ ATOMIC_POSITIONS crystal
  Fe2 0.50 0.50 0.50
 
 K_POINTS automatic
- 12 12 12   1 1 1
+ 4 4 4   1 1 1
 
