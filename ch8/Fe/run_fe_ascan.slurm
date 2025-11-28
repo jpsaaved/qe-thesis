@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=fe_FM      # change NM→FM/AFM when you change SPIN_MODE
+#SBATCH --job-name=fe_NM      # change NM→FM/AFM when you change SPIN_MODE
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --time=02:00:00
@@ -17,7 +17,7 @@ module load qe                       # adjust to your cluster
 # User settings
 # ----------------------------
 # Choose which spin state to run: NM, FM, or AFM
-SPIN_MODE="FM"                       # <-- change to "NM" or "AFM" as needed
+SPIN_MODE="NM"                       # <-- change to "NM" or "AFM" as needed
 
 SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$PWD}"
 cd "$SUBMIT_DIR"
