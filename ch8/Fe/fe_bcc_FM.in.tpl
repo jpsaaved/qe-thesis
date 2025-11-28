@@ -2,7 +2,7 @@
     calculation   = 'scf',
     prefix        = 'PREFIX',
     pseudo_dir    = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
-    outdir        = './tmp',
+    outdir        = 'OUTDIR',
     verbosity     = 'high'
 /
 &system
@@ -10,19 +10,19 @@
     A             = AAAA,
     nat           = 2,
     ntyp          = 2,
-    ecutwfc       = 45.0,
-    ecutrho       = 360.0,
+    ecutwfc       = 60.0,
+    ecutrho       = 480.0,
     occupations   = 'smearing',
     smearing      = 'mv',
     degauss       = 0.01,
 
     nspin         = 2,
-    starting_magnetization(1) = 0.6,  ! strong initial FM moment
-    starting_magnetization(2) = 0.6,
+    starting_magnetization(1) = 0.7,  ! strong initial FM moment
+    starting_magnetization(2) = 0.7,
 /
 &electrons
     conv_thr      = 1.0d-8,
-    mixing_beta   = 0.3,             ! gentler mixing → less collapse to NM
+    mixing_beta   = 0.1,             ! gentler mixing → less collapse to NM
     mixing_mode   = 'local-TF',
 /
 ATOMIC_SPECIES
@@ -34,5 +34,5 @@ ATOMIC_POSITIONS crystal
  Fe2 0.50 0.50 0.50
 
 K_POINTS automatic
- 12 12 12   1 1 1
+ 22 22 22   1 1 1
 
