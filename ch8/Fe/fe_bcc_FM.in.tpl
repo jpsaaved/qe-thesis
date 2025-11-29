@@ -3,7 +3,7 @@
     prefix        = 'PREFIX',
     pseudo_dir    = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
     outdir        = 'OUTDIR',
-    verbosity     = 'high'
+    verbosity     = 'high',
     restart_mode  = 'from_scratch',
 /
 &system

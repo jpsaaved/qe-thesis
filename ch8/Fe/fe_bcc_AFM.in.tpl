@@ -3,7 +3,7 @@
     prefix        = 'PREFIX',
     pseudo_dir    = '/users/jsaaved1/research/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS',
     outdir        = 'OUTDIR',
-    verbosity     = 'high'
+    verbosity     = 'high',
     restart_mode  = 'from_scratch',
 /
 &system
@@ -17,7 +17,9 @@
     smearing      = 'mv',
     degauss       = 0.01,
 
-    nspin         = 2,
+    nspin                     = 2,
+    constrained_magnetization = 'atomic',
+    lambda                    = 0.5,
     starting_magnetization(1) = 0.9,  ! strong initial FM moment
     starting_magnetization(2) = -0.9,
 /
