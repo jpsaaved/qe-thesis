@@ -18,12 +18,12 @@
     degauss       = 0.01,
 
     nspin         = 2,
-    starting_magnetization(1) = 0.8,  ! strong initial FM moment
-    starting_magnetization(2) = -0.8,
+    starting_magnetization(1) = 0.9,  ! strong initial FM moment
+    starting_magnetization(2) = -0.9,
 /
 &electrons
     conv_thr      = 1.0d-8,
-    mixing_beta   = 0.1,             ! gentler mixing → less collapse to NM
+    mixing_beta   = 0.05,             ! gentler mixing → less collapse to NM
     mixing_mode   = 'local-TF',
 /
 ATOMIC_SPECIES

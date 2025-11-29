@@ -9,8 +9,8 @@
 &system
     ibrav         = 3,
     A             = AAAA,
-    nat           = 2,
-    ntyp          = 2,
+    nat           = 1,
+    ntyp          = 1,
     ecutwfc       = 60.0,
     ecutrho       = 480.0,
     occupations   = 'smearing',
@@ -21,16 +21,14 @@
 /
 &electrons
     conv_thr      = 1.0d-8,
-    mixing_beta   = 0.1,             
+    mixing_beta   = 0.05,             
     mixing_mode   = 'local-TF',
 /
 ATOMIC_SPECIES
- Fe1 55.845 Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
- Fe2 55.845 Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
+ Fe 55.845 Fe.pbe-spn-kjpaw_psl.1.0.0.UPF
 
 ATOMIC_POSITIONS crystal
- Fe1 0.00 0.00 0.00
- Fe2 0.50 0.50 0.50
+ Fe 0.00 0.00 0.00
 
 K_POINTS automatic
  22 22 22   1 1 1
